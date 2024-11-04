@@ -12,7 +12,7 @@ from .models import Todo
 # Create your views here.
 
 class TodoView(View):
-    #조회 요쳥 처리 함수
+    #1. CRUD - 테이블 전체 조회
     def get(self, request):
         userid = request.GET.get("userid", None)
         if userid != None:
