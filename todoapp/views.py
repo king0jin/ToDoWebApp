@@ -89,3 +89,21 @@ class TodoView(View):
         else:
             #userid가 틀렸을 때
             return JsonResponse({'result':False, 'data': '존재하지 않는 데이터입니다.'}, status=status.HTTP_404_NOT_FOUND)
+        
+    #4. CRUD - 데이터 삭제
+    def delete(self, request):
+        #클라이언트가 전송한 데이터 가져오기 - dict형태
+        request = json.loads(request.body)
+        #전송한 데이터(userid 와 id)읽기
+        userid = request['userid']
+        id = request["id"]
+        #수정한 데이터 찾아오기
+        todo = Todo.objects.get(id=id)
+        #삭제 대상 데이터가 테이블에 있는지 검사
+        if todo.userid == userid:
+            #있으면 삭제
+            todo.delete()
+            return JsonResponse({'result':True, 'data': '삭제 되었습니다.'}, status=status.HTTP_200_OK)
+        else:
+            return JsonResponse({'result':False, 'data': '존재하지 않는 데이터입니다.'}, status=status.HTTP_404_NOT_FOUND)
+        
