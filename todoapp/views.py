@@ -14,6 +14,9 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
+#날짜 만들기
+from datetime import datetime 
+
 #Todo 인스턴스를 JSON형태로 바꿔주는 메서드
 #직렬화로 
 def todoToDictionary(todo:Todo) -> dict:
@@ -64,3 +67,25 @@ class TodoView(View):
             todos = Todo.objects.all()
         #상태를 같이 전달하는게 좋음
         return JsonResponse({'list': list(todos.values())}, status=status.HTTP_200_OK)
+
+    #3. CURD - 데이터 수정
+    def put(self, request):
+        #클라이언트가 전송한 데이터 가져오기 - dict형태
+        request = json.loads(request.body)
+        #전송한 데이터(userid 와 id, done)읽기
+        userid = request['userid']
+        id = request["id"]
+        done = request["done"]
+        #수정한 데이터 찾아오기
+        todo = Todo.objects.get(id=id)
+        #수정할 데이터가 테이블에 있는지 검사
+        if todo.userid == userid:
+            #검사를 통과하면 데이터 수정
+            todo.done = done
+            todo.moddate = datetime.today()
+            #데이터 저장
+            todo.save()
+            return JsonResponse({'result':True, 'data': todoToDictionary(todo)}, status=status.HTTP_200_OK)
+        else:
+            #userid가 틀렸을 때
+            return JsonResponse({'result':False, 'data': '존재하지 않는 데이터입니다.'}, status=status.HTTP_404_NOT_FOUND)
