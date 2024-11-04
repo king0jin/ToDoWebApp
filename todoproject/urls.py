@@ -21,6 +21,6 @@ from todoapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     #1. CURD - todo요청시, 테이블 조회
-    path("todo", views.TodoView.as_view()),
+    path("todo/", views.TodoView.as_view()),
 
 ]
