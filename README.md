@@ -43,3 +43,5 @@ Server Application은 Django, client Application은 react를 사용하여 ToDo W
 ## Server 연결
 **python manage.py runserver 127.0.0.1:80**
 + 브라우저로 127.0.0.1:80으로 접속했을 때 django페이지가 보이면 Server연결이 되었다.
+![image](https://github.com/user-attachments/assets/c0fafa9e-fa60-4983-ba76-cb128d3d046a)
+
