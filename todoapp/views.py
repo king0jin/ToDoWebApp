@@ -7,11 +7,26 @@ from rest_framework import status
 from django.views import View
 from .models import Todo
 
+#JSON사용
+import json
+
+#웹 요청 처리 설정을 위한 decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+#Todo 인스턴스를 JSON형태로 바꿔주는 메서드
+#직렬화로 
+def todoToDictionary(todo:Todo) -> dict:
+    result = {"id":todo.id, 
+              "userid":todo.userid, "title":todo.title, "done":todo.done, 
+              "regdate":todo.regdate, "moddate":todo.moddate}
+    return result
 
 # Create your views here.
-
+#csrf 설정
+@method_decorator(csrf_exempt, name='dispatch')
 class TodoView(View):
-    #1. CRUD - 테이블 전체 조회
+    #1. CRUD - 테이블 조회
     def get(self, request):
         userid = request.GET.get("userid", None)
         #1. user_id로 조회
@@ -22,3 +37,30 @@ class TodoView(View):
         else:
             todos = Todo.objects.all()
         return JsonResponse({'list':list(todos.values())}, status=status.HTTP_200_OK)
+    
+    #2. CRUD - 데이터 삽입
+    def post(self, request):
+        #클라이언트가 전송한 데이터 가져오기 - dict형태
+        request = json.loads(request.body)
+        #전송한 데이터(userid 와 title)읽기
+        userid = request["userid"]
+        title = request["title"]
+        #POST함수에 유효성 검사 코드 추가
+        if len(title) < 5:
+            return JsonResponse({'message':'제목은 다섯 글자'}, status=status.HTTP_200_OK)
+
+        #삽입할 데이터 생성
+        todo = Todo()
+        todo.userid = userid
+        todo.title = title
+        todo.done = False #기본값
+        #저장
+        todo.save()
+  
+        #userid에 해당하는 데이터 가져오기
+        if userid != None:
+            todos = Todo.objects.filter(userid=userid)
+        else:
+            todos = Todo.objects.all()
+        #상태를 같이 전달하는게 좋음
+        return JsonResponse({'list': list(todos.values())}, status=status.HTTP_200_OK)
