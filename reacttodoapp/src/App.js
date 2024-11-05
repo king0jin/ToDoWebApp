@@ -9,11 +9,30 @@ import {Paper, List, Container} from "@material-ui/core"
 class App extends React.Component{
   constructor(props) {
     super(props);
-    // 데이터 생성
-    this.state = {item: [{ id: 0, title: "황치즈쿠키먹기", done: false},
-                         { id: 1, title: "그릭요거트만들기", done: true}]};
+    // 데이터 삽입용 배열
+    this.state = {item: []};
   }
   
+  //컴포넌트가 메모리에 로드
+  componentDidMount(){
+    const requestoptions = {
+      method:"GET",
+      heraders:{"Content-Type":"application/json"}
+    };
+
+    fetch("http://localhost/todo", requestoptions)
+      .then((Response) => Response.json())
+      .then((respons) => {
+          this.setState({items:respons.list})
+        },
+        //예외처리
+        (error) => {
+          console.log(error)
+        }
+      )
+  }
+
+
   //데이터 추가 함수
   add = (item) => {
     //리액트의 state와 props는 불변의 객체
