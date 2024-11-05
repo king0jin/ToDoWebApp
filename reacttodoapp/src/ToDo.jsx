@@ -5,7 +5,7 @@ class ToDo extends React.Component {
         return (
             <div className="ToDo">
                 <input type="checkbox" id="todobox" name="todobox" value="todobox" />
-                <lable for="todobox">ToDo 컴포넌트 만들기</lable>
+                <label for="todobox">ToDo 컴포넌트 만들기</label>
             </div>
          );
      }
