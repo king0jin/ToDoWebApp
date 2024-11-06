@@ -2,7 +2,7 @@
 Server Application은 Django, client Application은 react를 사용하여 ToDo Web Application 제작하기
 
 
-**Server Applucation과 Client Application을 분리하서 개발하고 통신이 가능하도록 작업**
+**Server Application과 Client Application을 분리해서 개발하고 통신이 가능하도록 연결하기**
 
 ## Server Apllication 준비
 ### 데이터베이스 준비하기
