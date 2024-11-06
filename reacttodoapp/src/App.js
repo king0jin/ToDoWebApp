@@ -54,8 +54,8 @@ class App extends React.Component{
       //리스트를 여러개 담을 때 Paper안에 넣는다.
       <Paper style={{ margin: 16 }}>
         <List>
-          {this.state.items.map((item, idx) => (
-            <ToDo item={item} />
+          {this.state.items.map((item) => (
+            <ToDo key={item.id} item={item} />
           ))}
         </List>
       </Paper>
