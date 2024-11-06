@@ -95,6 +95,29 @@ package.json파일이 있는 디렉토리 위치에서 수행
 ### App.js
 import로 jsx파일들을 연결하여 jsx파일에 생성한 컴포넌트를 HTML형식으로 화면에 렌더링한다
 
+### CORS (Cross-Origin Resource Sharing)
+다른 출처(Origin) 간의 리소스 공유를 허용하거나 제한하는 보안 기능
++ Origin : 로드된 도메인, 포트, 프로토콜을 의미한다
+
+#### CORS 필요성
+기본적으로 웹 브라우저는 보안을 위해 동일 출처 정책(Same-Origin Policy)을 적용한다
+
+
+ex) 웹 페이지가 로드된 도메인 외의 다른 도메인으로 AJAX 요청을 보내는 것은 금지
+
+#### CORS 동작 방식
+웹 서버와 웹 브라우저 간의 HTTP 헤더를 통해 동작한다
++ 서버 : 헤더에 어떤 출처가 요청을 할 수 있는지 허용할지를 명시가 가능
+
+#### Django Project에 CORS 설정
++ 만들어둔 가상환경으로 접속하여 패키지 설치
+  + **pip install django-cors-headers**
++ settings.py 수정
+  + INSTALLES_APPS : **corsheaders** 추가
+  + MIDDLEWARE 제일 상단 : **corsheaders.middleware.CorsMiddleware** 추가
+  + 빈 곳에 **CORS_ORIGIN_WHITELIST = ['허용할 URL',,,]** 추가
+  + 빈 곳에 **CORS_ALLOW_CREDENTIALS = True** 추가
+
 ---
 #### 형제 컴포넌트는 독립적이다 : ToDo.jsx, AddToDo.jsx
 + 데이터는 정적이다
@@ -131,8 +154,28 @@ React와 같은 SPA에서는 이벤트 처리를 다르게 구현한다
 
 ![스크린샷 2024-11-06 133917](https://github.com/user-attachments/assets/f28338fe-5bcf-40ff-84bc-1d11c5c70f5f)
 + 추가(+)버튼, enter 키를 통해 데이터를 추가할 수 있다
+
+
 ![스크린샷 2024-11-06 133935](https://github.com/user-attachments/assets/13c261c9-5ac3-4d7a-bf3a-9399b8562d76)
 + react는 명시적으로 화면을 재출력하지 않자먼 state, props가 변경되면 화면을 재출력한다
+
+
 ---
 
+### State와 Props란?
++ state
+  + 컴포넌트의 내부 상태를 관리
++ props
+  + 부모 컴포넌트에서 자식 컴포넌트로 데이터를 전달
+**State 변경 시** 컴포넌트가 자동으로 다시 렌더링되어 데이터 바인딩이 쉽게 이루어진다
 
+### 여러 개의 데이터 출력 방법
++ map 함수 사용
+  + 배열 데이터를 반복하여 컴포넌트로 렌더링
+    + 이때 각 자식 요소에 고유한 key를 제공하는 것이 중요하다.
+    + 효율적으로 리스트를 표시하고 업데이트할 수 있다.
+
+### AJAX, Fetch API, Axios 사용
+**서버와 비동기 통신을 하기 위해 AJAX, Fetch API, Axios를 사용**
++ Fetch API는 내장되어 있어 간단한 요청에 적합
++ Axios는 더 많은 기능과 간편한 설정을 제공해 인기 있다
