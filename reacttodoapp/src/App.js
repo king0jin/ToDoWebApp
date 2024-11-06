@@ -15,15 +15,15 @@ class App extends React.Component{
   
   //컴포넌트가 메모리에 로드
   componentDidMount(){
-    const requestoptions = {
+    const requestptions = {
       method:"GET",
-      heraders:{"Content-Type":"application/json"}
+      herders:{"Content-Type":"application/json"}
     };
 
-    fetch("http://localhost/todo", requestoptions)
+    fetch("http://localhost/todo", requestptions)
       .then((Response) => Response.json())
-      .then((respons) => {
-          this.setState({items:respons.list})
+      .then((response) => {
+          this.setState({items:response.list})
         },
         //예외처리
         (error) => {
@@ -50,7 +50,7 @@ class App extends React.Component{
 
   render() {
     //데이터가 있을 때 수행한다
-    var todoItems = this.state.item.length > 0 && (
+    var todoItems = this.state.items.length > 0 && (
       //리스트를 여러개 담을 때 Paper안에 넣는다.
       <Paper style={{ margin: 16 }}>
         <List>
