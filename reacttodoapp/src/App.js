@@ -10,7 +10,7 @@ class App extends React.Component{
   constructor(props) {
     super(props);
     // 데이터 삽입용 배열
-    this.state = {item: []};
+    this.state = {items: []};
   }
   
   //컴포넌트가 메모리에 로드
@@ -37,15 +37,15 @@ class App extends React.Component{
   add = (item) => {
     //리액트의 state와 props는 불변의 객체
     //기존의 state에 있는 데이터들을 thisItems에 복사
-    const thisItems = this.state.item;
+    const thisItems = this.state.items;
     //새로운 데이터를 추가하기위한 초기상태 설정
     item.id = "ID-" + thisItems.length;
     //done 초기화
     item.done = false;
     //thisItems에 새로운 데이터 추가
     thisItems.push(item); 
-    this.setState({ item: thisItems }); // 업데이트는 반드시 this.setState로 해야됨.
-    console.log("items : ", this.state.item);
+    this.setState({ items: thisItems }); // 업데이트는 반드시 this.setState로 해야됨.
+    console.log("items : ", this.state.items);
   };
 
   render() {
@@ -54,7 +54,7 @@ class App extends React.Component{
       //리스트를 여러개 담을 때 Paper안에 넣는다.
       <Paper style={{ margin: 16 }}>
         <List>
-          {this.state.item.map((item, idx) => (
+          {this.state.items.map((item, idx) => (
             <ToDo item={item} />
           ))}
         </List>
